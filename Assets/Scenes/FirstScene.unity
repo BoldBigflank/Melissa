@@ -777,16 +777,16 @@ MonoBehaviour:
   - 4
   - 4
   punchUIDelay:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   - 4
-  - 4
-  - 4
-  - 4
-  - 4
-  - 4
-  - 4
-  - 4
-  - 4
-  - 4
+  - 0
+  - 0
+  - 0
   punchScreenShakeTimestamp: []
   debugText: {fileID: 1993380408}
 --- !u!4 &1700526673
@@ -1002,9 +1002,9 @@ Rigidbody2D:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2102509414}
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 7
+  m_LinearDrag: 3
+  m_AngularDrag: 0.5
   m_GravityScale: 1
   m_IsKinematic: 0
   m_Interpolate: 0

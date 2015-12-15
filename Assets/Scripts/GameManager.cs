@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject movieScreen;
 	public Canvas canvas;
+	GameObject mainCamera;
 
 	Renderer movieRenderer;
 
@@ -22,12 +23,14 @@ public class GameManager : MonoBehaviour {
 	public float[] banalUIDelay;
 	public float[] punchUIDelay;
 	public float[] punchScreenShakeTimestamp;
+	public Vector2[] punchScreenShakeForce;
 
 
 	public Text debugText;
 
 	// Use this for initialization
 	void Start () {
+		mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 		current = this;
 		movieRenderer = movieScreen.GetComponent<Renderer>();
 		stage = 0;
@@ -100,20 +103,20 @@ public class GameManager : MonoBehaviour {
 	private IEnumerator PunchScreenShake (float seconds){
 		yield return new WaitForSeconds(seconds);
 
-		// TODO: Tell the GameManager to screenshake down/left
+		Debug.Log("Punch!!!!");
+		// TODO: Implement the individual punch forces
+
+		mainCamera.GetComponent<Rigidbody2D>().AddForce(new Vector2(200.0F, -200.0F), ForceMode2D.Impulse);
 
 	}
 
 	private IEnumerator DisableUI (float seconds){
 		uiEnabled = false;
-		// TODO:  Animate out the GUI
-
 
 		Debug.Log("UI is Disabled");
 
 		yield return new WaitForSeconds(seconds);
 
-		// TODO: Animate in the GUI
 		canvas.GetComponent<Animation>().Play("FadeIn");
 		Debug.Log("UI is Enabled");
 
