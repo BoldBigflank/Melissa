@@ -54,14 +54,14 @@ public class GameManager : MonoBehaviour {
 		Debug.Log(button + " button pressed");
 
 		// If it's the Banal Z Button
-		if(button == "Z"){
+		if(uiEnabled && button == "Z"){
 			choice = "Banal";
 			PlayMovieThenLoop(stage + choice);
 			canvas.GetComponent<Animation>().Play("PressZ");
 		}
 
 		// If it's the Punch X Button
-		if(button == "X"){
+		if(uiEnabled && button == "X"){
 			stage++;
 			choice = "Punch";
 			PlayMovieThenLoop(stage + choice);
