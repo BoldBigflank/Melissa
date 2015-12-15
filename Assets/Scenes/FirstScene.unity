@@ -787,7 +787,28 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  punchScreenShakeTimestamp: []
+  punchScreenShakeTimestamp:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  punchScreenShakeForce:
+  - {x: -200, y: -200}
+  - {x: -200, y: -200}
+  - {x: -200, y: -200}
+  - {x: -200, y: -200}
+  - {x: -200, y: -200}
+  - {x: -200, y: -200}
+  - {x: -200, y: -200}
+  - {x: -200, y: -200}
+  - {x: -200, y: -200}
+  - {x: -200, y: -200}
   debugText: {fileID: 1993380408}
 --- !u!4 &1700526673
 Transform:

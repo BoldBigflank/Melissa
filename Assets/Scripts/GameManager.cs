@@ -95,18 +95,15 @@ public class GameManager : MonoBehaviour {
 		}
 		if(choice == "Punch"){
 			StartCoroutine( DisableUI(punchUIDelay[stage]));
-			StartCoroutine( PunchScreenShake(punchUIDelay[stage]));
+			StartCoroutine( PunchScreenShake(punchUIDelay[stage], punchScreenShakeForce[stage]));
 		}
 
 	}
 
-	private IEnumerator PunchScreenShake (float seconds){
+	private IEnumerator PunchScreenShake (float seconds, Vector2 force){
 		yield return new WaitForSeconds(seconds);
 
-		Debug.Log("Punch!!!!");
-		// TODO: Implement the individual punch forces
-
-		mainCamera.GetComponent<Rigidbody2D>().AddForce(new Vector2(200.0F, -200.0F), ForceMode2D.Impulse);
+		mainCamera.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
 
 	}
 
