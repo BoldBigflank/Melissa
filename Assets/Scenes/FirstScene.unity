@@ -171,6 +171,8 @@ GameObject:
   - 223: {fileID: 594845305}
   - 114: {fileID: 594845304}
   - 114: {fileID: 594845303}
+  - 225: {fileID: 594845308}
+  - 111: {fileID: 594845309}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -253,6 +255,34 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &594845308
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 594845302}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!111 &594845309
+Animation:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 594845302}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 93ff208666f2148598036846bd53434b, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 3def17e35b5194fd08e29af1b3b40b1c, type: 2}
+  - {fileID: 7400000, guid: f7817be80e3b142159e08f12c9651400, type: 2}
+  - {fileID: 7400000, guid: 93ff208666f2148598036846bd53434b, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &674769253
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,6 +764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movieScreen: {fileID: 1398097998}
+  canvas: {fileID: 594845305}
   banalUIDelay:
   - 4
   - 4

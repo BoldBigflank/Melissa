@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour {
 	public static GameManager current;
 
 	public GameObject movieScreen;
+	public Canvas canvas;
+
 	Renderer movieRenderer;
 
 	MovieTexture movie;
@@ -31,6 +33,7 @@ public class GameManager : MonoBehaviour {
 		stage = 0;
 		choice = "Intro";
 		uiEnabled = true;
+//		canvas.GetComponent<Animation>().Stop();
 	}
 	
 	// Update is called once per frame
@@ -54,6 +57,7 @@ public class GameManager : MonoBehaviour {
 		if(button == "Z"){
 			choice = "Banal";
 			PlayMovieThenLoop(stage + choice);
+			canvas.GetComponent<Animation>().Play("PressZ");
 		}
 
 		// If it's the Punch X Button
@@ -61,6 +65,7 @@ public class GameManager : MonoBehaviour {
 			stage++;
 			choice = "Punch";
 			PlayMovieThenLoop(stage + choice);
+			canvas.GetComponent<Animation>().Play("PressX");
 		}
 
 	}
@@ -81,12 +86,13 @@ public class GameManager : MonoBehaviour {
 		// Set up the loop
 		StartCoroutine(SetupLoop(path));
 
-		// TODO: DisableUI for the correct number of seconds
-		if(choice == "Banal") StartCoroutine( DisableUI(banalUIDelay[stage]));
+		if(choice == "Banal"){
+			StartCoroutine( DisableUI(banalUIDelay[stage]));
+
+		}
 		if(choice == "Punch"){
 			StartCoroutine( DisableUI(punchUIDelay[stage]));
 			StartCoroutine( PunchScreenShake(punchUIDelay[stage]));
-
 		}
 
 	}
@@ -101,10 +107,14 @@ public class GameManager : MonoBehaviour {
 	private IEnumerator DisableUI (float seconds){
 		uiEnabled = false;
 		// TODO:  Animate out the GUI
+
+
 		Debug.Log("UI is Disabled");
+
 		yield return new WaitForSeconds(seconds);
 
 		// TODO: Animate in the GUI
+		canvas.GetComponent<Animation>().Play("FadeIn");
 		Debug.Log("UI is Enabled");
 
 		uiEnabled = true;
