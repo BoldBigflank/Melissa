@@ -249,7 +249,7 @@ RectTransform:
   - {fileID: 807509906}
   - {fileID: 1993380407}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -343,7 +343,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!1 &807509905
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,7 +539,7 @@ Transform:
   m_LocalScale: {x: 16, y: 9, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!1 &1505487857
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,16 +777,16 @@ MonoBehaviour:
   - 4
   - 4
   punchUIDelay:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 4
-  - 0
-  - 0
-  - 0
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
   punchScreenShakeTimestamp:
   - 0
   - 0
@@ -907,9 +907,9 @@ GameObject:
   - 92: {fileID: 2102509417}
   - 124: {fileID: 2102509416}
   - 81: {fileID: 2102509415}
-  - 114: {fileID: 2102509420}
   - 50: {fileID: 2102509422}
   - 231: {fileID: 2102509421}
+  - 114: {fileID: 2102509420}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -983,19 +983,24 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 4
 --- !u!114 &2102509420
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2102509414}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18af1fb83368a4a33a59b486cf39e707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swayRadius: 1.5
+  joint: {fileID: 2102509421}
+  swayRadius: 1
+  verticalDistance: 0.5
+  horizontalDistance: 0.75
+  verticalPeriod: 1
+  horizontalPeriod: 2.2
 --- !u!231 &2102509421
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -1031,4 +1036,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4

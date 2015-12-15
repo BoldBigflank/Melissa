@@ -4,10 +4,13 @@ using System.Collections;
 public class Sway : MonoBehaviour {
 	Vector3 originalPosition;
 	Vector3 swayDirection;
-	Vector3 targetPosition;
 
-
+	public SpringJoint2D joint;
 	public float swayRadius = 1.5F;
+	public float verticalDistance = 1.5F;
+	public float horizontalDistance = 2.0F;
+	public float verticalPeriod = 2.0F;
+	public float horizontalPeriod = 2.2F;
 
 
 
@@ -15,16 +18,14 @@ public class Sway : MonoBehaviour {
 	void Start () {
 		originalPosition = transform.position;
 		swayDirection = Random.onUnitSphere * 6.0F;
-		targetPosition = originalPosition + Random.onUnitSphere * swayRadius/2.0F;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		transform.position += swayDirection * Time.deltaTime;
-		if((transform.position - originalPosition).sqrMagnitude > swayRadius*swayRadius){
-			swayDirection = Vector3.Lerp(swayDirection, -1 * (transform.position - targetPosition), Time.deltaTime);
-		} else {
-			targetPosition = originalPosition + Random.onUnitSphere * swayRadius/2.0F;
-		}
+		float x = horizontalDistance * Mathf.Sin( Time.timeSinceLevelLoad / horizontalPeriod );
+		float y = verticalDistance * Mathf.Sin( Time.timeSinceLevelLoad / verticalPeriod );
+			
+//		transform.position = new Vector3(x, y, -10.0F);
+		joint.anchor = new Vector2(x, y);
 	}
 }
