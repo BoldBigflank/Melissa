@@ -781,7 +781,7 @@ MonoBehaviour:
   - 3
   - 3
   - 3
-  - 3
+  - 999
   - 3
   - 3
   - 3
@@ -799,7 +799,7 @@ MonoBehaviour:
   - 0
   - 0
   punchScreenShakeForce:
-  - {x: -200, y: -200}
+  - {x: 0, y: 0}
   - {x: -200, y: -200}
   - {x: -200, y: -200}
   - {x: -200, y: -200}

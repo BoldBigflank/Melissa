@@ -34,9 +34,9 @@ public class GameManager : MonoBehaviour {
 		current = this;
 		movieRenderer = movieScreen.GetComponent<Renderer>();
 		stage = 0;
-		choice = "Intro";
-		uiEnabled = true;
-//		canvas.GetComponent<Animation>().Stop();
+		choice = "Punch";
+		uiEnabled = false;
+		PlayMovieThenLoop(stage + choice);
 	}
 	
 	// Update is called once per frame
@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour {
 		}
 		if(choice == "Punch"){
 			StartCoroutine( DisableUI(punchUIDelay[stage]));
-			StartCoroutine( PunchScreenShake(punchUIDelay[stage], punchScreenShakeForce[stage]));
+			StartCoroutine( PunchScreenShake(punchScreenShakeTimestamp[stage], punchScreenShakeForce[stage]));
 		}
 
 	}
@@ -126,17 +126,17 @@ public class GameManager : MonoBehaviour {
 		// Wait for the end of the movie
 		while(movie.isPlaying) yield return 0;
 
-		if (stage == 9 && choice == "Punch") {
-			// The end
-			movie = Resources.Load("9PunchEND") as MovieTexture;
-			movie.loop = false;
 
+		Debug.Log("Opening " + path + "Loop");
+		movie = Resources.Load(path + "Loop") as MovieTexture;
+		if(!movie) {
+			movie = Resources.Load(path + "End") as MovieTexture;
+			movie.loop = false;
 		} else {
-			Debug.Log("Opening " + path + "Loop");
-			movie = Resources.Load(path + "Loop") as MovieTexture;
 			movie.loop = true;
-			debugText.text = path + "Loop";
 		}
+		debugText.text = path + "Loop";
+
 
 		// Is this one necessary?
 		movieRenderer.material.mainTexture = movie;
