@@ -5,6 +5,7 @@ public class PlayIntro : MonoBehaviour {
 	public GameObject movieScreen;
 	public MovieTexture movie;
 	Renderer movieRenderer;
+	public bool goToNextScene = false;
 
 	GameObject mainCamera;
 	public AudioSource audioSource;
@@ -38,7 +39,7 @@ public class PlayIntro : MonoBehaviour {
 	private IEnumerator NextScene(){
 		// Wait for the end of the movie
 		while(movie.isPlaying) yield return 0;
-		Application.LoadLevel("Scenes/FirstScene");
-
+		if(goToNextScene) Application.LoadLevel("Scenes/FirstScene");
+		// TODO: Go to the halfsheet/start again?
 	}
 }
