@@ -25,6 +25,9 @@ public class PlayIntro : MonoBehaviour {
 	void PlayMovie(){
 		StopAllCoroutines(); // UI and Loop
 
+		WWW www = new WWW("http://www.unity3d.com/webplayers/Movie/sample.ogg");
+		var movieTexture = www.movie;
+
 		movie.loop = false;
 
 		movieRenderer.material.mainTexture = movie;
