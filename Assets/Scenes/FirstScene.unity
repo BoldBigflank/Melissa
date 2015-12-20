@@ -798,15 +798,15 @@ MonoBehaviour:
   - 0
   punchScreenShakeForce:
   - {x: 0, y: 0}
-  - {x: -200, y: -200}
-  - {x: -200, y: -200}
-  - {x: -200, y: -200}
-  - {x: -200, y: -200}
-  - {x: -200, y: -200}
-  - {x: -200, y: -200}
-  - {x: -200, y: -200}
-  - {x: -200, y: -200}
-  - {x: -200, y: -200}
+  - {x: -150, y: -200}
+  - {x: -150, y: -200}
+  - {x: -150, y: -200}
+  - {x: -150, y: -200}
+  - {x: -150, y: -200}
+  - {x: -150, y: -200}
+  - {x: -150, y: -200}
+  - {x: -150, y: -200}
+  - {x: -150, y: -200}
   debugText: {fileID: 1993380408}
 --- !u!4 &1700526673
 Transform:
@@ -956,7 +956,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3
+  orthographic size: 4.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -993,6 +993,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18af1fb83368a4a33a59b486cf39e707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enabled: 0
   joint: {fileID: 2102509421}
   swayRadius: 1
   verticalDistance: .5
@@ -1025,7 +1026,7 @@ Rigidbody2D:
   m_LinearDrag: 3
   m_AngularDrag: .5
   m_GravityScale: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0

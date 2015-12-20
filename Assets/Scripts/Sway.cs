@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class Sway : MonoBehaviour {
+	public bool enabled;
 	Vector3 originalPosition;
 	Vector3 swayDirection;
 
@@ -16,16 +17,19 @@ public class Sway : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		enabled = false;
 		originalPosition = transform.position;
 		swayDirection = Random.onUnitSphere * 6.0F;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		float x = horizontalDistance * Mathf.Sin( Time.timeSinceLevelLoad / horizontalPeriod );
-		float y = verticalDistance * Mathf.Sin( Time.timeSinceLevelLoad / verticalPeriod );
-			
-//		transform.position = new Vector3(x, y, -10.0F);
-		joint.anchor = new Vector2(x, y);
+		if(enabled){
+			float x = horizontalDistance * Mathf.Sin( Time.timeSinceLevelLoad / horizontalPeriod );
+			float y = verticalDistance * Mathf.Sin( Time.timeSinceLevelLoad / verticalPeriod );
+			joint.anchor = new Vector2(x, y);
+		} else {
+			joint.anchor = Vector2.zero;
+		}
 	}
 }

@@ -121,17 +121,30 @@ public class GameManager : MonoBehaviour {
 
 		movieTexture.Play();
 		movieSound.Play ();
+
+		// Do other stuff because why not
+		if(path.Contains("0PunchLoop")){
+			// Start the swaying and the bobbing
+			mainCamera.GetComponent<Sway>().enabled = true;
+			mainCamera.GetComponent<Rigidbody2D>().isKinematic = false;
+			mainCamera.GetComponent<Camera>().orthographicSize = 3.0F;
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		// Keyboard shortcuts
+		if(Input.GetKeyDown (KeyCode.Escape)){
+			Application.LoadLevel ("Credits");
+		}
 		if(uiEnabled && Input.GetKeyDown(KeyCode.Z)){
 			ButtonPress("Z");
 		}
 		if(uiEnabled && Input.GetKeyDown(KeyCode.X)){
 			ButtonPress("X");
 		}
+
+
 		if (movieTexture && !movieTexture.isPlaying && movieTexture.isReadyToPlay){
 			Debug.Log ("Starting a Loop");
 			StartCoroutine(PlayMovieFromQueue(urlRoot + stage + choice + "Loop.ogg", true));
@@ -148,7 +161,6 @@ public class GameManager : MonoBehaviour {
 		// If it's the Banal Z Button
 		if(uiEnabled && button == "Z"){
 			choice = "Banal";
-//			PlayMovieThenLoop(stage + choice);
 			canvas.GetComponent<Animation>().Play("PressZ");
 			StartCoroutine( PlayMovieFromQueue(urlRoot+stage+choice+".ogg", false));
 			AddMovieToQueue (urlRoot + stage + choice + "Loop.ogg");
@@ -162,47 +174,17 @@ public class GameManager : MonoBehaviour {
 			StartCoroutine( PlayMovieFromQueue(urlRoot+stage+choice+".ogg", false));
 			// The next phase
 			ClearQueue();
-			AddMovieToQueue (urlRoot + (stage+1) + "Punch" + ".ogg");
-			// The available banal
-			AddMovieToQueue (urlRoot + stage + "Banal" + ".ogg");
-			// The loop of the current choice
-			AddMovieToQueue (urlRoot + stage + choice + "Loop.ogg");
+			if(stage < 9){
+				AddMovieToQueue (urlRoot + (stage+1) + "Punch" + ".ogg");
+				// The available banal
+				AddMovieToQueue (urlRoot + stage + "Banal" + ".ogg");
+				// The loop of the current choice
+				AddMovieToQueue (urlRoot + stage + choice + "Loop.ogg");
 
+			} else {
+
+			}
 			canvas.GetComponent<Animation>().Play("PressX");
-		}
-
-	}
-
-	void PlayMovieThenLoop(string path){
-		StopAllCoroutines(); // UI and Loop
-
-		// TODO: Can I load all movies before they are needed? Or the next possible 3?
-		// TODO: Blink closed/open during this
-		// "http://www.unity3d.com/webplayers/Movie/sample.ogg"
-		WWW www = new WWW(path);
-
-		movieTexture = www.movie;
-
-
-//		movie = Resources.Load(path) as MovieTexture;
-//		movie.loop = false;
-
-		movieRenderer.material.mainTexture = movieTexture;
-		movieSound.clip = movieTexture.audioClip;
-//		movie.Stop();
-//		movie.Play();
-		debugText.text = path;
-
-		// Set up the loop
-		StartCoroutine(SetupLoop(path));
-
-		if(choice == "Banal"){
-			StartCoroutine( DisableUI(banalUIDelay[stage]));
-
-		}
-		if(choice == "Punch"){
-			StartCoroutine( DisableUI(punchUIDelay[stage]));
-			StartCoroutine( PunchScreenShake(punchScreenShakeTimestamp[stage], punchScreenShakeForce[stage]));
 		}
 
 	}
