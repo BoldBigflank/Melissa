@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 
-
-
 public class GameManager : MonoBehaviour {
 	public static GameManager current;
-	string urlRoot = "https://s3-us-west-2.amazonaws.com/melissaagameofchoice/";
+//	string urlRoot = "https://s3-us-west-2.amazonaws.com/melissaagameofchoice/";
+	string urlRoot = "https://dl.dropboxusercontent.com/u/7776712/Converted/";
 
 	public GameObject movieScreen;
 	public AudioSource movieSound;
@@ -46,13 +45,14 @@ public class GameManager : MonoBehaviour {
 		AddMovieToQueue ("Intro");
 		// load 0Punch
 		AddMovieToQueue (urlRoot + (stage+1) + "Punch" + ".ogg");
+		AddMovieToQueue (urlRoot + (stage+1) + "PunchLoop" + ".ogg");
 		// The available banal
 		AddMovieToQueue (urlRoot + stage + "Banal" + ".ogg");
 		// The loop of the current choice
 		AddMovieToQueue (urlRoot + stage + choice + "Loop.ogg");
 		// Play the intro, 
 		StartCoroutine( PlayMovieFromQueue("Intro", false));
-
+//		StartCoroutine( PlayMovieFromQueue(urlRoot + (stage) + "PunchLoop" + ".ogg", true));
 	}
 
 	void AddMovieToQueue(string path){
@@ -62,8 +62,8 @@ public class GameManager : MonoBehaviour {
 		MovieTexture mt = new MovieTexture();
 		if(path.StartsWith("http")){
 			WWW www = new WWW(path);
-//			mt = www.movie;
-			mt = Resources.Load("0Punch") as MovieTexture; // DEBUG
+			mt = www.movie;
+//			mt = Resources.Load("0Punch") as MovieTexture; // DEBUG
 		} else {
 			mt = Resources.Load(path) as MovieTexture;
 		}
@@ -94,7 +94,13 @@ public class GameManager : MonoBehaviour {
 
 
 		movieTexture = movieQueue[path];
-		movieSound.clip = movieQueue[path].audioClip;
+		
+		while(!movieTexture.isReadyToPlay){
+//			Debug.Log ("Waiting");
+			yield return 0;
+		}
+		
+		movieSound.clip = movieTexture.audioClip;
 		movieTexture.loop = loop;
 
 		movieTexture.Stop();
@@ -114,10 +120,7 @@ public class GameManager : MonoBehaviour {
 			StartCoroutine( PunchScreenShake(punchScreenShakeTimestamp[stage], punchScreenShakeForce[stage]));
 		}
 
-		while(!movieTexture.isReadyToPlay){
-			Debug.Log ("Waiting");
-			yield return 0;
-		}
+		
 
 		movieTexture.Play();
 		movieSound.Play ();
