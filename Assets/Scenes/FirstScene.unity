@@ -782,7 +782,7 @@ MonoBehaviour:
   - {x: -150, y: -200}
   - {x: -150, y: -200}
   - {x: -150, y: -200}
-  debugText: {fileID: 1993380408}
+  debugText: {fileID: 743241896}
 --- !u!4 &1700526673
 Transform:
   m_ObjectHideFlags: 0
@@ -1090,7 +1090,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2102509414}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18af1fb83368a4a33a59b486cf39e707, type: 3}
   m_Name: 
