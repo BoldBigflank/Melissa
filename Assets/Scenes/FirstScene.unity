@@ -773,16 +773,16 @@ MonoBehaviour:
   - 0
   punchScreenShakeForce:
   - {x: 0, y: 0}
-  - {x: -200, y: -200}
-  - {x: -200, y: -200}
-  - {x: -200, y: -200}
-  - {x: -200, y: -200}
-  - {x: -200, y: -200}
-  - {x: -200, y: -200}
-  - {x: -200, y: -200}
-  - {x: -200, y: -200}
-  - {x: -200, y: -200}
-  debugText: {fileID: 743241896}
+  - {x: -150, y: -200}
+  - {x: -150, y: -200}
+  - {x: -150, y: -200}
+  - {x: -150, y: -200}
+  - {x: -150, y: -200}
+  - {x: -150, y: -200}
+  - {x: -150, y: -200}
+  - {x: -150, y: -200}
+  - {x: -150, y: -200}
+  debugText: {fileID: 1993380408}
 --- !u!4 &1700526673
 Transform:
   m_ObjectHideFlags: 0
@@ -1095,6 +1095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18af1fb83368a4a33a59b486cf39e707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enabled: 0
   joint: {fileID: 2102509421}
   swayRadius: 1
   verticalDistance: .5
