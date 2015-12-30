@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Application.runInBackground = true;
 		mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 		movieQueue = new Dictionary<string, MovieTexture>();
 		current = this;
@@ -110,18 +111,17 @@ public class GameManager : MonoBehaviour {
 		movieSound.clip = movieTexture.audioClip;
 
 		debugText.text = path;
-
-		if(choice == "Banal"){
-			StartCoroutine( DisableUI(banalUIDelay[stage]));
-			
+		if(!loop){
+			if(choice == "Banal"){
+				StartCoroutine( DisableUI(banalUIDelay[stage]));
+				
+			}
+			if(choice == "Punch"){
+				StartCoroutine( DisableUI(punchUIDelay[stage]));
+				StartCoroutine( PunchScreenShake(punchScreenShakeTimestamp[stage], punchScreenShakeForce[stage]));
+			}
 		}
-		if(choice == "Punch"){
-			StartCoroutine( DisableUI(punchUIDelay[stage]));
-			StartCoroutine( PunchScreenShake(punchScreenShakeTimestamp[stage], punchScreenShakeForce[stage]));
-		}
-
 		
-
 		movieTexture.Play();
 		movieSound.Play ();
 
