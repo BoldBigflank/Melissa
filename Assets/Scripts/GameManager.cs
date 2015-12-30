@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 	public static GameManager current;
 //	string urlRoot = "https://s3-us-west-2.amazonaws.com/melissaagameofchoice/";
-	string urlRoot = "https://dl.dropboxusercontent.com/u/7776712/Converted/";
+//	string urlRoot = "https://dl.dropboxusercontent.com/u/7776712/Converted/";
 
 	public GameObject movieScreen;
 	public AudioSource movieSound;
@@ -45,31 +45,32 @@ public class GameManager : MonoBehaviour {
 
 		AddMovieToQueue ("Intro");
 		// load 0Punch
-		AddMovieToQueue (urlRoot + (stage+1) + "Punch" + ".ogg");
-		AddMovieToQueue (urlRoot + (stage+1) + "PunchLoop" + ".ogg");
+		AddMovieToQueue ((stage+1) + "Punch");
+		AddMovieToQueue ((stage+1) + "PunchLoop");
 		// The available banal
-		AddMovieToQueue (urlRoot + stage + "Banal" + ".ogg");
+		AddMovieToQueue (stage + "Banal");
 		// The loop of the current choice
-		AddMovieToQueue (urlRoot + stage + choice + "Loop.ogg");
+		AddMovieToQueue (stage + choice + "LOOP");
 		// Play the intro, 
 		StartCoroutine( PlayMovieFromQueue("Intro", false));
-//		StartCoroutine( PlayMovieFromQueue(urlRoot + (stage) + "PunchLoop" + ".ogg", true));
+//		StartCoroutine( PlayMovieFromQueue((stage) + "PunchLoop" + ".ogg", true));
 	}
 
 	void AddMovieToQueue(string path){
 		if(movieQueue.ContainsKey(path)) return; // Don't add already existing ones
 
-		Debug.Log ("AddMovieToQueue " + path);
 		MovieTexture mt = new MovieTexture();
 		if(path.StartsWith("http")){
 			WWW www = new WWW(path);
 			mt = www.movie;
-//			mt = Resources.Load("0Punch") as MovieTexture; // DEBUG
 		} else {
-			mt = Resources.Load(path) as MovieTexture;
+			mt = Resources.Load<MovieTexture>(path) as MovieTexture;
 		}
 
 		movieQueue.Add (path, mt);
+		Resources.UnloadAsset(mt);
+		Debug.Log ("Queue size: " + movieQueue.Count.ToString());
+		
 	}
 
 	void ClearQueue(){
@@ -97,7 +98,6 @@ public class GameManager : MonoBehaviour {
 		movieTexture = movieQueue[path];
 		
 		while(!movieTexture.isReadyToPlay){
-//			Debug.Log ("Waiting");
 			yield return 0;
 		}
 		
@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour {
 		movieSound.Play ();
 
 		// Do other stuff because why not
-		if(path.Contains("0PunchLoop")){
+		if(path.Contains("0PunchLOOP")){
 			// Start the swaying and the bobbing
 			mainCamera.GetComponent<Sway>().enabled = true;
 			mainCamera.GetComponent<Rigidbody2D>().isKinematic = false;
@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour {
 				return;
 			}
 			Debug.Log ("Starting a Loop");
-			StartCoroutine(PlayMovieFromQueue(urlRoot + stage + choice + "Loop.ogg", true));
+			StartCoroutine(PlayMovieFromQueue(stage + choice + "LOOP", true));
 		}
 
 	}
@@ -170,8 +170,8 @@ public class GameManager : MonoBehaviour {
 		if(uiEnabled && button == "Z"){
 			choice = "Banal";
 			canvas.GetComponent<Animation>().Play("PressZ");
-			StartCoroutine( PlayMovieFromQueue(urlRoot+stage+choice+".ogg", false));
-			AddMovieToQueue (urlRoot + stage + choice + "Loop.ogg");
+			StartCoroutine( PlayMovieFromQueue(stage+choice, false));
+			AddMovieToQueue (stage + choice + "LOOP");
 		}
 
 		// If it's the Punch X Button
@@ -179,18 +179,17 @@ public class GameManager : MonoBehaviour {
 			stage++;
 			choice = "Punch";
 
-			StartCoroutine( PlayMovieFromQueue(urlRoot+stage+choice+".ogg", false));
+			StartCoroutine( PlayMovieFromQueue(stage+choice, false));
 			// The next phase
 			ClearQueue();
-			if(stage < 9){
-				AddMovieToQueue (urlRoot + (stage+1) + "Punch" + ".ogg");
+			if(stage < 10){
+				AddMovieToQueue ((stage+1) + "Punch");
 				// The available banal
-				AddMovieToQueue (urlRoot + stage + "Banal" + ".ogg");
+				AddMovieToQueue (stage + "Banal");
 				// The loop of the current choice
-				AddMovieToQueue (urlRoot + stage + choice + "Loop.ogg");
+				AddMovieToQueue (stage + choice + "LOOP");
 
 			} else {
-
 			}
 			canvas.GetComponent<Animation>().Play("PressX");
 		}
@@ -207,43 +206,12 @@ public class GameManager : MonoBehaviour {
 	private IEnumerator DisableUI (float seconds){
 		uiEnabled = false;
 
-		Debug.Log("UI is Disabled");
-
 		yield return new WaitForSeconds(seconds);
 
 		canvas.GetComponent<Animation>().Play("FadeIn");
-		Debug.Log("UI is Enabled");
 
 		uiEnabled = true;
 
-	}
-
-
-	private IEnumerator SetupLoop(string path){
-		// Wait for the end of the movie
-		while(!movieTexture.isReadyToPlay || movieTexture.isPlaying) yield return 0;
-
-
-		Debug.Log("Opening " + path + "Loop");
-
-		WWW www = new WWW("https://dl.dropboxusercontent.com/u/7776712/demo.ogg");
-		movieTexture = www.movie;
-
-//		movieTexture = Resources.Load(path + "Loop") as MovieTexture;
-
-		// https://s3.amazonaws.com/SwanHomeMovies/Alex+Kevin+Home+1986-1-1.m4v
-		if(!movieTexture) {
-			movieTexture = Resources.Load(path + "End") as MovieTexture;
-			movieTexture.loop = false;
-		} else {
-			movieTexture.loop = true;
-		}
-		debugText.text = path + "Loop";
-
-
-		// Is this one necessary?
-		movieRenderer.material.mainTexture = movieTexture;
-//		movie.Play();
 	}
 
 }
