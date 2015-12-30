@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour {
 	public static GameManager current;
 //	string urlRoot = "https://s3-us-west-2.amazonaws.com/melissaagameofchoice/";
 //	string urlRoot = "https://dl.dropboxusercontent.com/u/7776712/Converted/";
-
+	public bool debugMode = false;
 	public GameObject movieScreen;
 	public AudioSource movieSound;
 	public Canvas canvas;
@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour {
 		current = this;
 		movieRenderer = movieScreen.GetComponent<Renderer>();
 		stage = 0;
+		if(debugMode) stage = 9;
 		choice = "Punch";
 		uiEnabled = false;
 
@@ -147,7 +148,13 @@ public class GameManager : MonoBehaviour {
 		if(uiEnabled && Input.GetKeyDown(KeyCode.X)){
 			ButtonPress("X");
 		}
-
+		
+		if(debugMode){
+			if(Input.GetMouseButtonDown(0)){
+				movieTexture.Stop();
+			}
+		}
+		
 
 		if (movieTexture && !movieTexture.isPlaying && movieTexture.isReadyToPlay){
 			if(stage == 10){
