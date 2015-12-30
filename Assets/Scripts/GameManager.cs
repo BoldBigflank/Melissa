@@ -43,14 +43,14 @@ public class GameManager : MonoBehaviour {
 		choice = "Punch";
 		uiEnabled = false;
 
-		AddMovieToQueue ("Intro");
+//		AddMovieToQueue ("Intro");
 		// load 0Punch
-		AddMovieToQueue ((stage+1) + "Punch");
-		AddMovieToQueue ((stage+1) + "PunchLoop");
+//		AddMovieToQueue ((stage+1) + "Punch");
+//		AddMovieToQueue ((stage+1) + "PunchLoop");
 		// The available banal
-		AddMovieToQueue (stage + "Banal");
+//		AddMovieToQueue (stage + "Banal");
 		// The loop of the current choice
-		AddMovieToQueue (stage + choice + "LOOP");
+//		AddMovieToQueue (stage + choice + "LOOP");
 		// Play the intro, 
 		StartCoroutine( PlayMovieFromQueue("Intro", false));
 //		StartCoroutine( PlayMovieFromQueue((stage) + "PunchLoop" + ".ogg", true));
@@ -90,12 +90,13 @@ public class GameManager : MonoBehaviour {
 		Debug.Log ("Play movie from Queue " + path);
 		StopCoroutine("PlayMovieFromQueue");  // Stop the others
 
-		if(!movieQueue.ContainsKey(path)){
-			Debug.LogError ("No file found");
-		}
+//		if(!movieQueue.ContainsKey(path)){
+//			Debug.LogError ("No file found");
+//		}
 
 
-		movieTexture = movieQueue[path];
+//		movieTexture = movieQueue[path];
+		movieTexture = Resources.Load<MovieTexture>(path) as MovieTexture;
 		
 		while(!movieTexture.isReadyToPlay){
 			yield return 0;
@@ -151,6 +152,7 @@ public class GameManager : MonoBehaviour {
 		if (movieTexture && !movieTexture.isPlaying && movieTexture.isReadyToPlay){
 			if(stage == 10){
 				// End the game
+				Debug.Log ("Ending the game");
 				Application.LoadLevel ("Credits");
 				return;
 			}
@@ -171,7 +173,7 @@ public class GameManager : MonoBehaviour {
 			choice = "Banal";
 			canvas.GetComponent<Animation>().Play("PressZ");
 			StartCoroutine( PlayMovieFromQueue(stage+choice, false));
-			AddMovieToQueue (stage + choice + "LOOP");
+//			AddMovieToQueue (stage + choice + "LOOP");
 		}
 
 		// If it's the Punch X Button
@@ -182,12 +184,12 @@ public class GameManager : MonoBehaviour {
 			StartCoroutine( PlayMovieFromQueue(stage+choice, false));
 			// The next phase
 			ClearQueue();
-			if(stage < 10){
-				AddMovieToQueue ((stage+1) + "Punch");
+			if(stage < 11){
+//				AddMovieToQueue ((stage+1) + "Punch");
 				// The available banal
-				AddMovieToQueue (stage + "Banal");
+//				AddMovieToQueue (stage + "Banal");
 				// The loop of the current choice
-				AddMovieToQueue (stage + choice + "LOOP");
+//				AddMovieToQueue (stage + choice + "LOOP");
 
 			} else {
 			}
