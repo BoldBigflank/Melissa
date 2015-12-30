@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour {
 			// Start the swaying and the bobbing
 			mainCamera.GetComponent<Sway>().enabled = true;
 			mainCamera.GetComponent<Rigidbody2D>().isKinematic = false;
-			mainCamera.GetComponent<Camera>().orthographicSize = 3.0F;
+			mainCamera.GetComponent<Camera>().orthographicSize = 3.5F;
 		}
 	}
 	
