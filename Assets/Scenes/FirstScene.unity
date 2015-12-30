@@ -750,7 +750,7 @@ MonoBehaviour:
   - 4
   - 4
   punchUIDelay:
-  - 33
+  - 3
   - 3
   - 3
   - 3
@@ -1047,7 +1047,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
+  m_BackGroundColor: {r: .80392164, g: .839215755, b: .870588303, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
