@@ -149,6 +149,11 @@ public class GameManager : MonoBehaviour {
 
 
 		if (movieTexture && !movieTexture.isPlaying && movieTexture.isReadyToPlay){
+			if(stage == 10){
+				// End the game
+				Application.LoadLevel ("Credits");
+				return;
+			}
 			Debug.Log ("Starting a Loop");
 			StartCoroutine(PlayMovieFromQueue(urlRoot + stage + choice + "Loop.ogg", true));
 		}
