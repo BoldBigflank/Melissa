@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour {
 	public static GameManager current;
 //	string urlRoot = "https://s3-us-west-2.amazonaws.com/melissaagameofchoice/";
 //	string urlRoot = "https://dl.dropboxusercontent.com/u/7776712/Converted/";
-	public bool debugMode = false;
 	public GameObject movieScreen;
 	public AudioSource movieSound;
 	public Canvas canvas;
@@ -40,54 +39,17 @@ public class GameManager : MonoBehaviour {
 		current = this;
 		movieRenderer = movieScreen.GetComponent<Renderer>();
 		stage = 0;
-		if(debugMode) stage = 9;
+#if UNITY_EDITOR
+		stage = 1;
+#endif
 		choice = "Punch";
 		uiEnabled = false;
 
-//		AddMovieToQueue ("Intro");
-		// load 0Punch
-//		AddMovieToQueue ((stage+1) + "Punch");
-//		AddMovieToQueue ((stage+1) + "PunchLoop");
-		// The available banal
-//		AddMovieToQueue (stage + "Banal");
-		// The loop of the current choice
-//		AddMovieToQueue (stage + choice + "LOOP");
 		// Play the intro, 
-		StartCoroutine( PlayMovieFromQueue("Intro", false));
-//		StartCoroutine( PlayMovieFromQueue((stage) + "PunchLoop" + ".ogg", true));
-	}
-
-	void AddMovieToQueue(string path){
-		if(movieQueue.ContainsKey(path)) return; // Don't add already existing ones
-
-		MovieTexture mt = new MovieTexture();
-		if(path.StartsWith("http")){
-			WWW www = new WWW(path);
-			mt = www.movie;
-		} else {
-			mt = Resources.Load<MovieTexture>(path) as MovieTexture;
-		}
-
-		movieQueue.Add (path, mt);
-		Resources.UnloadAsset(mt);
-		Debug.Log ("Queue size: " + movieQueue.Count.ToString());
-		
-	}
-
-	void ClearQueue(){
-		List<string> keysToRemove = new List<string>();
-		// Delete all the movietextures that are not currently playing
-		foreach(string key in movieQueue.Keys){
-			if(movieQueue[key] != movieTexture){
-				keysToRemove.Add(key);
-			}
-		}
-		foreach(string key in keysToRemove){
-			movieQueue.Remove(key);
-		}
+		StartCoroutine( PlayMovieFromResources("Intro", false));
 	}
 	
-	IEnumerator PlayMovieFromQueue(string path, bool loop){
+	IEnumerator PlayMovieFromResources(string path, bool loop){
 		Debug.Log ("Play movie from Queue " + path);
 		StopCoroutine("PlayMovieFromQueue");  // Stop the others
 
@@ -96,7 +58,7 @@ public class GameManager : MonoBehaviour {
 //		}
 
 
-//		movieTexture = movieQueue[path];
+		Resources.UnloadAsset(movieTexture); // Remove the old one
 		movieTexture = Resources.Load<MovieTexture>(path) as MovieTexture;
 		
 		while(!movieTexture.isReadyToPlay){
@@ -112,7 +74,9 @@ public class GameManager : MonoBehaviour {
 		movieRenderer.material.mainTexture = movieTexture;
 		movieSound.clip = movieTexture.audioClip;
 
+#if UNITY_EDITOR
 		debugText.text = path;
+#endif
 		if(!loop){
 			if(choice == "Banal"){
 				StartCoroutine( DisableUI(banalUIDelay[stage]));
@@ -134,6 +98,7 @@ public class GameManager : MonoBehaviour {
 			mainCamera.GetComponent<Rigidbody2D>().isKinematic = false;
 			mainCamera.GetComponent<Camera>().orthographicSize = 3.5F;
 		}
+		
 	}
 	
 	// Update is called once per frame
@@ -149,11 +114,11 @@ public class GameManager : MonoBehaviour {
 			ButtonPress("X");
 		}
 		
-		if(debugMode){
+#if UNITY_EDITOR
 			if(Input.GetMouseButtonDown(0)){
 				movieTexture.Stop();
 			}
-		}
+#endif
 		
 
 		if (movieTexture && !movieTexture.isPlaying && movieTexture.isReadyToPlay){
@@ -164,7 +129,7 @@ public class GameManager : MonoBehaviour {
 				return;
 			}
 			Debug.Log ("Starting a Loop");
-			StartCoroutine(PlayMovieFromQueue(stage + choice + "LOOP", true));
+			StartCoroutine(PlayMovieFromResources(stage + choice + "LOOP", true));
 		}
 
 	}
@@ -179,7 +144,7 @@ public class GameManager : MonoBehaviour {
 		if(uiEnabled && button == "Z"){
 			choice = "Banal";
 			canvas.GetComponent<Animation>().Play("PressZ");
-			StartCoroutine( PlayMovieFromQueue(stage+choice, false));
+			StartCoroutine( PlayMovieFromResources(stage+choice, false));
 //			AddMovieToQueue (stage + choice + "LOOP");
 		}
 
@@ -188,9 +153,8 @@ public class GameManager : MonoBehaviour {
 			stage++;
 			choice = "Punch";
 
-			StartCoroutine( PlayMovieFromQueue(stage+choice, false));
+			StartCoroutine( PlayMovieFromResources(stage+choice, false));
 			// The next phase
-			ClearQueue();
 			if(stage < 11){
 //				AddMovieToQueue ((stage+1) + "Punch");
 				// The available banal
