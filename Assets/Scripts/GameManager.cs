@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Application.runInBackground = true;
+		Application.targetFrameRate = 24;
+		Time.captureFramerate = 24;
 		mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 		movieQueue = new Dictionary<string, MovieTexture>();
 		current = this;
@@ -104,15 +106,21 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(uiEnabled){
+			Cursor.visible = true;
+		}
+
 		// Keyboard shortcuts
 		if(Input.GetKeyDown (KeyCode.Escape)){
 			Application.LoadLevel ("Credits");
 		}
 		if(uiEnabled && Input.GetKeyDown(KeyCode.Z)){
 			ButtonPress("Z");
+			Cursor.visible = false;
 		}
 		if(uiEnabled && Input.GetKeyDown(KeyCode.X)){
 			ButtonPress("X");
+			Cursor.visible = false;
 		}
 		
 #if UNITY_EDITOR
