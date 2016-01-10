@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour {
 		movieRenderer = movieScreen.GetComponent<Renderer>();
 		stage = 0;
 #if UNITY_EDITOR
-		stage = 1;
+		stage = 0;
 #endif
 		choice = "Punch";
 		uiEnabled = false;
@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour {
 
 
 		Resources.UnloadAsset(movieTexture); // Remove the old one
+		Debug.Log ("Loading " + path);
 		movieTexture = Resources.Load<MovieTexture>(path) as MovieTexture;
 		
 		while(!movieTexture.isReadyToPlay){
