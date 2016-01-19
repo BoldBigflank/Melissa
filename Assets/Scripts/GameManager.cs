@@ -100,6 +100,9 @@ public class GameManager : MonoBehaviour {
 			mainCamera.GetComponent<Sway>().enabled = true;
 			mainCamera.GetComponent<Rigidbody2D>().isKinematic = false;
 			mainCamera.GetComponent<Camera>().orthographicSize = 3.5F;
+
+			// Start the music
+			gameObject.GetComponent<MusicLayers>().StartMusic();
 		}
 		
 	}
@@ -143,6 +146,10 @@ public class GameManager : MonoBehaviour {
 
 	}
 
+	public int GetStage(){
+		return stage;
+	}
+
 	public void ButtonPress(string button){
 		// We're not doing the loop any more
 		StopCoroutine("SetupLoop"); // No loop
@@ -164,15 +171,6 @@ public class GameManager : MonoBehaviour {
 
 			StartCoroutine( PlayMovieFromResources(stage+choice, false));
 			// The next phase
-			if(stage < 11){
-//				AddMovieToQueue ((stage+1) + "Punch");
-				// The available banal
-//				AddMovieToQueue (stage + "Banal");
-				// The loop of the current choice
-//				AddMovieToQueue (stage + choice + "LOOP");
-
-			} else {
-			}
 			canvas.GetComponent<Animation>().Play("PressX");
 		}
 

@@ -717,6 +717,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 1700526673}
   - 114: {fileID: 1700526672}
+  - 114: {fileID: 1700526675}
+  - 82: {fileID: 1700526674}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -798,6 +800,99 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!82 &1700526674
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1700526671}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+--- !u!114 &1700526675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1700526671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68af52deec47540e1aedd72d655a39ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - {fileID: 8300000, guid: 3dac12b734def4924998d7b2d98314be, type: 3}
+  - {fileID: 8300000, guid: 12839861a78ef4ff5af9d8e5b817d4c4, type: 3}
+  - {fileID: 8300000, guid: ee7cf757a1d2a481cab98afc632e4106, type: 3}
+  - {fileID: 8300000, guid: e694266471fad4b4ea46ac1995315474, type: 3}
+  - {fileID: 8300000, guid: c9ed9cf78a19b408b8062887ebf25af3, type: 3}
+  - {fileID: 8300000, guid: bef2d385aab994dd3b547ef38602c298, type: 3}
+  - {fileID: 8300000, guid: 37c9b317307b94151bd3004185568fdd, type: 3}
+  - {fileID: 8300000, guid: 798e26a83dff3493c86121b60c08cd81, type: 3}
+  - {fileID: 8300000, guid: 15b7e87043530434a871eea7c43333e8, type: 3}
+  - {fileID: 8300000, guid: 1f3ee4891c8664650a8efe8e57b95186, type: 3}
+  - {fileID: 8300000, guid: 3556609edb6924dd1969985a22d5170b, type: 3}
 --- !u!1 &1990776669
 GameObject:
   m_ObjectHideFlags: 0
