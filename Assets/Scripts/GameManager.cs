@@ -97,8 +97,8 @@ public class GameManager : MonoBehaviour {
 		// Do other stuff because why not
 		if(path.Contains("0PunchLOOP")){
 			// Start the swaying and the bobbing
-			mainCamera.GetComponent<Sway>().enabled = true;
-			mainCamera.GetComponent<Rigidbody2D>().isKinematic = false;
+//			mainCamera.GetComponent<Sway>().enabled = true;
+//			mainCamera.GetComponent<Rigidbody2D>().isKinematic = false;
 			mainCamera.GetComponent<Camera>().orthographicSize = 3.5F;
 
 			// Start the music
@@ -179,7 +179,7 @@ public class GameManager : MonoBehaviour {
 	private IEnumerator PunchScreenShake (float seconds, Vector2 force){
 		yield return new WaitForSeconds(seconds);
 
-		mainCamera.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
+//		mainCamera.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
 
 	}
 
