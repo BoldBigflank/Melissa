@@ -11,7 +11,10 @@ public class GameManager : MonoBehaviour {
 	public GameObject movieScreen;
 	public AudioSource movieSound;
 	public Canvas canvas;
+	
+	// Game Objects/components
 	GameObject mainCamera;
+	Wiggle wiggle;
 
 	Renderer movieRenderer;
 
@@ -34,9 +37,10 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Application.runInBackground = true;
-		Application.targetFrameRate = 24;
-		Time.captureFramerate = 24;
+		Application.targetFrameRate = 30;
+		Time.captureFramerate = 30;
 		mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+		wiggle = mainCamera.GetComponent<Wiggle>();
 		movieQueue = new Dictionary<string, MovieTexture>();
 		current = this;
 		movieRenderer = movieScreen.GetComponent<Renderer>();
@@ -49,6 +53,8 @@ public class GameManager : MonoBehaviour {
 
 		// Play the intro, 
 		StartCoroutine( PlayMovieFromResources("Intro", false));
+//		StartCoroutine( PlayMovieFromResources("big_buck_bunny_480p_stereo", false));
+		
 	}
 	
 	IEnumerator PlayMovieFromResources(string path, bool loop){
@@ -98,6 +104,7 @@ public class GameManager : MonoBehaviour {
 		if(path.Contains("0PunchLOOP")){
 			// Start the swaying and the bobbing
 //			mainCamera.GetComponent<Sway>().enabled = true;
+			wiggle.enabled = true;
 //			mainCamera.GetComponent<Rigidbody2D>().isKinematic = false;
 			mainCamera.GetComponent<Camera>().orthographicSize = 3.5F;
 

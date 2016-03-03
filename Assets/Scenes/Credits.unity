@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movieScreen: {fileID: 1218720813}
-  movie: {fileID: 15200000, guid: 976bfa6b484944c4395c3298048d7671, type: 3}
+  movie: {fileID: 15200000, guid: 81f65997c2a6c4749a3a870ee5d48a09, type: 3}
   endMaterial: {fileID: 2100000, guid: aefb39ff95952499ea15489c869efd9d, type: 2}
   goToNextScene: 0
   audioSource: {fileID: 107991091}
@@ -198,7 +198,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 976bfa6b484944c4395c3298048d7671, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 81f65997c2a6c4749a3a870ee5d48a09, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
