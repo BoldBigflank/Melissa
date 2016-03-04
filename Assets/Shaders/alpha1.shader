@@ -17,15 +17,10 @@
 		}; 
 		sampler2D _MainTex; 
 		void surf(Input IN, inout SurfaceOutput o) { 
-			o.Emission = tex2D(_MainTex, IN.uv_MainTex).rgb; 
+			o.Emission = tex2D(_MainTex, float2(IN.uv_MainTex.x, IN.uv_MainTex.y/2+0.5)).rgb; 
 
-			if(IN.uv_MainTex.y <= 0.5){ 
-				o.Alpha=0; 
-			}
-
-			else{ 
-				o.Alpha = tex2D(_MainTex, float2(IN.uv_MainTex.x, IN.uv_MainTex.y-0.5)).rgb; 
-			}
+			
+			o.Alpha = tex2D(_MainTex, float2(IN.uv_MainTex.x, IN.uv_MainTex.y/2)).rgb; 
 
 		} 
 		ENDCG 
