@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class GameManager : MonoBehaviour {
@@ -23,7 +24,10 @@ public class GameManager : MonoBehaviour {
 	MovieTexture movieTexture;
 	MovieTexture banalTexture;
 	MovieTexture banalTextureAlpha;
-	Dictionary<string, MovieTexture> movieQueue;
+
+	// Load the movies
+	Dictionary<string, MovieTexture> allMovies;
+
 
 	int stage;
 	string choice;
@@ -41,11 +45,10 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Application.runInBackground = true;
-		Application.targetFrameRate = 30;
-		Time.captureFramerate = 30;
+		Application.targetFrameRate = 24;
+		Time.captureFramerate = 24;
 		mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 		wiggle = mainCamera.GetComponent<Wiggle>();
-		movieQueue = new Dictionary<string, MovieTexture>();
 		current = this;
 		movieRenderer = movieScreen.GetComponent<Renderer>();
 		banalRenderer = banalScreen.GetComponent<Renderer>();
@@ -57,29 +60,50 @@ public class GameManager : MonoBehaviour {
 		uiEnabled = false;
 
 		// Play the intro, 
-		StartCoroutine( PlayMovieFromResources("Intro", false));
-//		StartCoroutine( PlayMovieFromResources("big_buck_bunny_480p_stereo", false));
+//		StartCoroutine( PlayMovieFromResources("Intro", false));
+		movieTexture = (MovieTexture)movieRenderer.material.mainTexture;
+		movieTexture.Play();
 		banalTexture = banalRenderer.material.mainTexture as MovieTexture;
-//		banalTextureAlpha = banalRenderer.material.GetTexture("_Detail") as MovieTexture;
-		banalTexture.loop = true;
-		banalTexture.Play ();
-//		banalTextureAlpha.loop = true;
-//		banalTextureAlpha.Play ();
-		
+		banalTexture.Play();
+
+		// All the movies
+		allMovies = new Dictionary<string, MovieTexture>();
+//		allMovies.Add(new  Resources.Load<MovieTexture>("MovieTextures/" + path) as MovieTexture);
+
+		allMovies.Add("Intro", Resources.Load<MovieTexture>("MovieTextures/Intro") as MovieTexture);
+		allMovies.Add("1Punch", Resources.Load<MovieTexture>("MovieTextures/1Punch") as MovieTexture);
+		allMovies.Add("2Punch", Resources.Load<MovieTexture>("MovieTextures/2Punch") as MovieTexture);
+		allMovies.Add("3Punch", Resources.Load<MovieTexture>("MovieTextures/3Punch") as MovieTexture);
+		allMovies.Add("4Punch", Resources.Load<MovieTexture>("MovieTextures/4Punch") as MovieTexture);
+		allMovies.Add("5Punch", Resources.Load<MovieTexture>("MovieTextures/5Punch") as MovieTexture);
+		allMovies.Add("6Punch", Resources.Load<MovieTexture>("MovieTextures/6Punch") as MovieTexture);
+		allMovies.Add("7Punch", Resources.Load<MovieTexture>("MovieTextures/7Punch") as MovieTexture);
+		allMovies.Add("8Punch", Resources.Load<MovieTexture>("MovieTextures/8Punch") as MovieTexture);
+		allMovies.Add("9Punch", Resources.Load<MovieTexture>("MovieTextures/9Punch") as MovieTexture);
+		allMovies.Add("10Punch", Resources.Load<MovieTexture>("MovieTextures/10Punch") as MovieTexture);
+		allMovies.Add("0PunchLOOP", Resources.Load<MovieTexture>("MovieTextures/0PunchLOOP") as MovieTexture);
+		allMovies.Add("1PunchLOOP", Resources.Load<MovieTexture>("MovieTextures/1PunchLOOP") as MovieTexture);
+		allMovies.Add("2PunchLOOP", Resources.Load<MovieTexture>("MovieTextures/2PunchLOOP") as MovieTexture);
+		allMovies.Add("3PunchLOOP", Resources.Load<MovieTexture>("MovieTextures/3PunchLOOP") as MovieTexture);
+		allMovies.Add("4PunchLOOP", Resources.Load<MovieTexture>("MovieTextures/4PunchLOOP") as MovieTexture);
+		allMovies.Add("5PunchLOOP", Resources.Load<MovieTexture>("MovieTextures/5PunchLOOP") as MovieTexture);
+		allMovies.Add("6PunchLOOP", Resources.Load<MovieTexture>("MovieTextures/6PunchLOOP") as MovieTexture);
+		allMovies.Add("7PunchLOOP", Resources.Load<MovieTexture>("MovieTextures/7PunchLOOP") as MovieTexture);
+		allMovies.Add("8PunchLOOP", Resources.Load<MovieTexture>("MovieTextures/8PunchLOOP") as MovieTexture);
+		allMovies.Add("9PunchLOOP", Resources.Load<MovieTexture>("MovieTextures/9PunchLOOP") as MovieTexture);
 	}
 	
 	IEnumerator PlayMovieFromResources(string path, bool loop){
-		Debug.Log ("Play movie from Queue " + path);
+		Debug.Log ("Play movie from Resources " + path);
 		StopCoroutine("PlayMovieFromQueue");  // Stop the others
 
-//		if(!movieQueue.ContainsKey(path)){
-//			Debug.LogError ("No file found");
-//		}
+		movieTexture.Stop();
+		movieSound.Stop();
 
-
-		Resources.UnloadAsset(movieTexture); // Remove the old one
+//		Resources.UnloadAsset(movieTexture); // Remove the old one
 		Debug.Log ("Loading " + path);
-		movieTexture = Resources.Load<MovieTexture>(path) as MovieTexture;
+//		movieTexture = Resources.Load<MovieTexture>("MovieTextures/" + path) as MovieTexture;
+		movieTexture = allMovies[path];
 		
 		while(!movieTexture.isReadyToPlay){
 			yield return 0;
@@ -118,7 +142,7 @@ public class GameManager : MonoBehaviour {
 			wiggle.enabled = true;
 //			mainCamera.GetComponent<Rigidbody2D>().isKinematic = false;
 			mainCamera.GetComponent<Camera>().orthographicSize = 4.0F;
-			movieScreen.transform.localScale = new Vector3(16.0f, 9.796f, 1.0f);
+			movieScreen.transform.localScale = new Vector3(16.0f, 10.0f, 1.0f);
 			movieScreen.transform.position = new Vector3(0.0f, -0.796f, 0.0f);
 
 			// Start the music
@@ -147,8 +171,9 @@ public class GameManager : MonoBehaviour {
 		}
 		
 #if UNITY_EDITOR
-			if(Input.GetMouseButtonDown(0)){
+			if(Input.GetMouseButtonDown(1)){
 				movieTexture.Stop();
+				EnableUI();
 			}
 #endif
 		
@@ -208,10 +233,12 @@ public class GameManager : MonoBehaviour {
 
 		yield return new WaitForSeconds(seconds);
 
+		EnableUI();
+	}
+
+	private void EnableUI(){
 		canvas.GetComponent<Animation>().Play("FadeIn");
-
 		uiEnabled = true;
-
 	}
 
 }
