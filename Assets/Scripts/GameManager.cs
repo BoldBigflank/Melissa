@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
 //	string urlRoot = "https://s3-us-west-2.amazonaws.com/melissaagameofchoice/";
 //	string urlRoot = "https://dl.dropboxusercontent.com/u/7776712/Converted/";
 	public GameObject movieScreen;
+	public GameObject banalScreen;
 	public AudioSource movieSound;
 	public Canvas canvas;
 	
@@ -17,8 +18,11 @@ public class GameManager : MonoBehaviour {
 	Wiggle wiggle;
 
 	Renderer movieRenderer;
+	Renderer banalRenderer;
 
 	MovieTexture movieTexture;
+	MovieTexture banalTexture;
+	MovieTexture banalTextureAlpha;
 	Dictionary<string, MovieTexture> movieQueue;
 
 	int stage;
@@ -44,6 +48,7 @@ public class GameManager : MonoBehaviour {
 		movieQueue = new Dictionary<string, MovieTexture>();
 		current = this;
 		movieRenderer = movieScreen.GetComponent<Renderer>();
+		banalRenderer = banalScreen.GetComponent<Renderer>();
 		stage = 0;
 #if UNITY_EDITOR
 		stage = 0;
@@ -54,6 +59,12 @@ public class GameManager : MonoBehaviour {
 		// Play the intro, 
 		StartCoroutine( PlayMovieFromResources("Intro", false));
 //		StartCoroutine( PlayMovieFromResources("big_buck_bunny_480p_stereo", false));
+		banalTexture = banalRenderer.material.mainTexture as MovieTexture;
+//		banalTextureAlpha = banalRenderer.material.GetTexture("_Detail") as MovieTexture;
+		banalTexture.loop = true;
+		banalTexture.Play ();
+//		banalTextureAlpha.loop = true;
+//		banalTextureAlpha.Play ();
 		
 	}
 	
@@ -106,7 +117,9 @@ public class GameManager : MonoBehaviour {
 //			mainCamera.GetComponent<Sway>().enabled = true;
 			wiggle.enabled = true;
 //			mainCamera.GetComponent<Rigidbody2D>().isKinematic = false;
-			mainCamera.GetComponent<Camera>().orthographicSize = 3.5F;
+			mainCamera.GetComponent<Camera>().orthographicSize = 4.0F;
+			movieScreen.transform.localScale = new Vector3(16.0f, 9.796f, 1.0f);
+			movieScreen.transform.position = new Vector3(0.0f, -0.796f, 0.0f);
 
 			// Start the music
 			gameObject.GetComponent<MusicLayers>().StartMusic();
