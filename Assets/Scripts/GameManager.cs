@@ -9,27 +9,28 @@ public class GameManager : MonoBehaviour {
 	public static GameManager current;
 //	string urlRoot = "https://s3-us-west-2.amazonaws.com/melissaagameofchoice/";
 //	string urlRoot = "https://dl.dropboxusercontent.com/u/7776712/Converted/";
-	public GameObject movieScreen;
-	public GameObject banalScreen;
-	public AudioSource movieSound;
 	public Canvas canvas;
 	
 	// Game Objects/components
 	GameObject mainCamera;
 	Wiggle wiggle;
 
-	Renderer movieRenderer;
-	Renderer banalRenderer;
-
-	MovieTexture movieTexture;
-	MovieTexture banalTexture;
-	MovieTexture banalTextureAlpha;
-
-	// Load the movies
+	// Punch Movie stuff
 	Dictionary<string, MovieTexture> allMovies;
-
-
+	public GameObject movieScreen;
+	public AudioSource movieSound;
+	Renderer movieRenderer;
+	MovieTexture movieTexture;
 	int stage;
+
+	// Banal Movie stuff
+	Dictionary<string, MovieTexture> banalMovies;
+	public GameObject banalScreen;
+	public AudioSource banalSound;
+	Renderer banalRenderer;
+	MovieTexture banalTexture;
+	int banalStage;
+
 	string choice;
 
 	bool uiEnabled;
@@ -53,9 +54,7 @@ public class GameManager : MonoBehaviour {
 		movieRenderer = movieScreen.GetComponent<Renderer>();
 		banalRenderer = banalScreen.GetComponent<Renderer>();
 		stage = 0;
-#if UNITY_EDITOR
-		stage = 0;
-#endif
+		banalStage = 0;
 		choice = "Punch";
 		uiEnabled = false;
 
@@ -70,7 +69,6 @@ public class GameManager : MonoBehaviour {
 		allMovies = new Dictionary<string, MovieTexture>();
 //		allMovies.Add(new  Resources.Load<MovieTexture>("MovieTextures/" + path) as MovieTexture);
 
-		allMovies.Add("Intro", Resources.Load<MovieTexture>("MovieTextures/Intro") as MovieTexture);
 		allMovies.Add("1Punch", Resources.Load<MovieTexture>("MovieTextures/1Punch") as MovieTexture);
 		allMovies.Add("2Punch", Resources.Load<MovieTexture>("MovieTextures/2Punch") as MovieTexture);
 		allMovies.Add("3Punch", Resources.Load<MovieTexture>("MovieTextures/3Punch") as MovieTexture);
@@ -91,29 +89,44 @@ public class GameManager : MonoBehaviour {
 		allMovies.Add("7PunchLOOP", Resources.Load<MovieTexture>("MovieTextures/7PunchLOOP") as MovieTexture);
 		allMovies.Add("8PunchLOOP", Resources.Load<MovieTexture>("MovieTextures/8PunchLOOP") as MovieTexture);
 		allMovies.Add("9PunchLOOP", Resources.Load<MovieTexture>("MovieTextures/9PunchLOOP") as MovieTexture);
-	}
-	
-	IEnumerator PlayMovieFromResources(string path, bool loop){
-		Debug.Log ("Play movie from Resources " + path);
-		StopCoroutine("PlayMovieFromQueue");  // Stop the others
 
-		movieTexture.Stop();
-		movieSound.Stop();
+		banalMovies = new Dictionary<string, MovieTexture>();
+		banalMovies.Add("Intro", Resources.Load<MovieTexture>("MovieTextures/Intro") as MovieTexture);
+		banalMovies.Add("0Banal", Resources.Load<MovieTexture>("MovieTextures/0Banal") as MovieTexture);
+		banalMovies.Add("1Banal", Resources.Load<MovieTexture>("MovieTextures/1Banal") as MovieTexture);
+		banalMovies.Add("2Banal", Resources.Load<MovieTexture>("MovieTextures/2Banal") as MovieTexture);
+		banalMovies.Add("3Banal", Resources.Load<MovieTexture>("MovieTextures/3Banal") as MovieTexture);
+		banalMovies.Add("4Banal", Resources.Load<MovieTexture>("MovieTextures/4Banal") as MovieTexture);
+		banalMovies.Add("5Banal", Resources.Load<MovieTexture>("MovieTextures/5Banal") as MovieTexture);
+		banalMovies.Add("6Banal", Resources.Load<MovieTexture>("MovieTextures/6Banal") as MovieTexture);
+		banalMovies.Add("7Banal", Resources.Load<MovieTexture>("MovieTextures/7Banal") as MovieTexture);
+		banalMovies.Add("8Banal", Resources.Load<MovieTexture>("MovieTextures/8Banal") as MovieTexture);
+		banalMovies.Add("9Banal", Resources.Load<MovieTexture>("MovieTextures/9Banal") as MovieTexture);
+		banalMovies.Add("10Banal", Resources.Load<MovieTexture>("MovieTextures/10Banal") as MovieTexture);
+		banalMovies.Add("11Banal", Resources.Load<MovieTexture>("MovieTextures/11Banal") as MovieTexture);
+		banalMovies.Add("12Banal", Resources.Load<MovieTexture>("MovieTextures/12Banal") as MovieTexture);
+
+	}
+
+
+
+	IEnumerator PlayPunchMovie(string path, bool loop){
+		Debug.Log ("Play movie from Resources " + path);
 
 //		Resources.UnloadAsset(movieTexture); // Remove the old one
 		Debug.Log ("Loading " + path);
 //		movieTexture = Resources.Load<MovieTexture>("MovieTextures/" + path) as MovieTexture;
-		movieTexture = allMovies[path];
+		MovieTexture newMovieTexture = allMovies[path];
 		
-		while(!movieTexture.isReadyToPlay){
+		while(!newMovieTexture.isReadyToPlay){
 			yield return 0;
 		}
-		
-		movieSound.clip = movieTexture.audioClip;
-		movieTexture.loop = loop;
 
 		movieTexture.Stop();
 		movieSound.Stop();
+
+		movieTexture = newMovieTexture;
+		movieTexture.loop = loop;
 
 		movieRenderer.material.mainTexture = movieTexture;
 		movieSound.clip = movieTexture.audioClip;
@@ -149,6 +162,38 @@ public class GameManager : MonoBehaviour {
 			gameObject.GetComponent<MusicLayers>().StartMusic();
 		}
 		
+	}
+
+	IEnumerator PlayBanalMovie(string path){
+		Debug.Log ("Play Banal " + path);
+
+		//		Resources.UnloadAsset(movieTexture); // Remove the old one
+		Debug.Log ("Loading " + path);
+		//		movieTexture = Resources.Load<MovieTexture>("MovieTextures/" + path) as MovieTexture;
+		MovieTexture newBanalTexture = banalMovies[path];
+
+		while(!newBanalTexture.isReadyToPlay){
+			yield return 0;
+		}
+
+
+		banalTexture.Stop();
+		banalSound.Stop();
+
+		banalTexture = newBanalTexture;
+		banalTexture.loop = false;
+
+		banalRenderer.material.mainTexture = banalTexture;
+		banalSound.clip = banalTexture.audioClip;
+		DisableUI(banalTexture.duration);
+
+		#if UNITY_EDITOR
+		debugText.text = path;
+		#endif
+
+		banalTexture.Play();
+		banalSound.Play ();
+		banalStage = (banalStage + 1) % banalMovies.Count;
 	}
 	
 	// Update is called once per frame
@@ -186,7 +231,7 @@ public class GameManager : MonoBehaviour {
 				return;
 			}
 			Debug.Log ("Starting a Loop");
-			StartCoroutine(PlayMovieFromResources(stage + choice + "LOOP", true));
+			StartCoroutine(PlayPunchMovie(stage + choice + "LOOP", true));
 		}
 
 	}
@@ -205,7 +250,7 @@ public class GameManager : MonoBehaviour {
 		if(uiEnabled && button == "Z"){
 			choice = "Banal";
 			canvas.GetComponent<Animation>().Play("PressZ");
-			StartCoroutine( PlayMovieFromResources(stage+choice, false));
+			StartCoroutine( PlayPunchMovie(stage+choice, false));
 //			AddMovieToQueue (stage + choice + "LOOP");
 		}
 
@@ -214,7 +259,7 @@ public class GameManager : MonoBehaviour {
 			stage++;
 			choice = "Punch";
 
-			StartCoroutine( PlayMovieFromResources(stage+choice, false));
+			StartCoroutine( PlayPunchMovie(stage+choice, false));
 			// The next phase
 			canvas.GetComponent<Animation>().Play("PressX");
 		}

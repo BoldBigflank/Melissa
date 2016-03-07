@@ -802,10 +802,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4bad1b3e9186455989931f0ad100d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movieScreen: {fileID: 1398097998}
-  banalScreen: {fileID: 957103154}
-  movieSound: {fileID: 2102509423}
   canvas: {fileID: 2075311688}
+  movieScreen: {fileID: 1398097998}
+  movieSound: {fileID: 2102509423}
+  banalScreen: {fileID: 957103154}
+  banalSound: {fileID: 0}
   banalUIDelay:
   - 15.45
   - 4.16
